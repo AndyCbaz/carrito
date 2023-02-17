@@ -7,6 +7,7 @@ const productsList = document.querySelector("#products-container")
 // Carrito de compras
 const car = document.querySelector('#car');
 const carList = document.querySelector('#car__list')
+const emptyCarButton = document.querySelector('#empty__car')
 let carProducts = []
 
 
@@ -24,6 +25,15 @@ function eventListenersLoader(){
 
     //*Se ejecuta cuando se presione el boton delete
     car.addEventListener("click", deleteProduct);
+
+    //*Se ejecuta cuando se recarga la pagina
+    document.addEventListener('DOMContentLoaded', () => {
+        carProducts = JSON.parse(localStorage.getItem('car')) || [];
+        carElementsHTML();
+    })
+
+    //* Se ejecuta cuando se presione el botón "Empty Car"
+    emptyCarButton.addEventListener('click', emptyCar);
 
 }
 
@@ -134,16 +144,21 @@ function carElementsHTML() {
         `;
         carList.appendChild(div);
         // console.log(carList)
-    })
-    
+    }) 
+
+    productsStorage();
+}
+
+function productsStorage(){
+    localStorage.setItem('car', JSON.stringify(carProducts));
 }
 
 
 //Eliminar productos
-document.querySelector(".empty__button").addEventListener("click", () => {
-    carList.innerHTML = "";
-    carProducts = [];
-});
+// document.querySelector(".empty__button").addEventListener("click", () => {
+//     carList.innerHTML = "";
+//     carProducts = [];
+// });
 
 
 function deleteProduct(e){
@@ -154,3 +169,28 @@ function deleteProduct(e){
 
     }
 }
+
+
+function emptyCar(){
+    carList.innerHTML = "";
+    carProducts = [];
+}
+
+//*Local storage
+
+
+//* Guardar un valor en el local storage
+// localStorage.setItem('name','andres');
+
+//*Obtener un valor del local storage
+// console.log(localStorage.getItem('name'));
+
+// const user = {
+//     name: 'andres',
+//     lastname: 'bonilla'
+// }
+
+// localStorage.setItem('user',JSON.stringify(user));
+// const userFromLocal = localStorage.getItem('user')
+
+// console.log(JSON.parse(userFromLocal));
