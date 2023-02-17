@@ -22,6 +22,9 @@ function eventListenersLoader(){
     //* Se ejecuta cuando se presione el botón "Add to car"
     productsList.addEventListener('click', addProduct);
 
+    //*Se ejecuta cuando se presione el boton delete
+    car.addEventListener("click", deleteProduct);
+
 }
 
 // Petición GET.
@@ -129,8 +132,25 @@ function carElementsHTML() {
         </div>
         <hr>
         `;
-        carList.appendChild(div)
-        console.log(carList)
+        carList.appendChild(div);
+        // console.log(carList)
     })
     
+}
+
+
+//Eliminar productos
+document.querySelector(".empty__button").addEventListener("click", () => {
+    carList.innerHTML = "";
+    carProducts = [];
+});
+
+
+function deleteProduct(e){
+    if(e.target.classList.contains('delete__product')){
+        const productId = e.target.getAttribute('data-id')
+        carProducts = carProducts.filter(product => product.id !== productId);
+        carElementsHTML();
+
+    }
 }
